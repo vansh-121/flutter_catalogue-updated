@@ -27,7 +27,9 @@ class DetailPage extends StatelessWidget {
           alignment: MainAxisAlignment.spaceBetween,
           // buttonPadding: Vx.mOnly(right: 8),
           children: [
-            catalog.price.text.xl3
+            "Rs.${catalog.price}"
+                .text
+                .xl3
                 .color(context.theme.hintColor)
                 .extraBold
                 .make(),
@@ -99,7 +101,10 @@ class __AddToCartState extends State<_AddToCart> {
         shape: const WidgetStatePropertyAll(StadiumBorder()),
       ),
       child: isAdded
-          ? Icon(Icons.done)
+          ? Icon(
+              Icons.done,
+              color: Colors.white,
+            )
           : "Add To Cart".text.color(Colors.white).bold.make(),
     ).wh(140, 40);
   }

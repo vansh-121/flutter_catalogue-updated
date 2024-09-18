@@ -38,7 +38,9 @@ class CatalogProduct extends StatelessWidget {
               alignment: MainAxisAlignment.spaceBetween,
               // buttonPadding: Vx.mOnly(right: 8),
               children: [
-                catalog.price.text.xl
+                "Rs.${catalog.price}"
+                    .text
+                    .xl
                     .color(context.theme.highlightColor)
                     .bold
                     .make(),
