@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         shape: StadiumBorder(),
         backgroundColor: context.theme.shadowColor,
         child: const Icon(
-          CupertinoIcons.cart,
+          CupertinoIcons.bag_fill,
           color: Colors.white,
         ),
       ),
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Container(
           // color: MyTheme.creamcolor,
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
