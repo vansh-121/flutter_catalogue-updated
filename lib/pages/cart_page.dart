@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/models/cart.dart';
-import 'package:flutter_catalogue/pages/detail_page.dart';
-import 'package:flutter_catalogue/themes.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CartPage extends StatelessWidget {
@@ -29,7 +27,7 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cart = CartModel();
+    final CartModel _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 200,
       child: Row(
@@ -49,29 +47,31 @@ class _CartTotal extends StatelessWidget {
             child: "Place Order".text.color(Colors.white).bold.make(),
           ).wh(140, 35),
           30.widthBox,
-          "Rs.${_cart.totalPrice}"
-              .text
-              .color(context.theme.hintColor)
-              .bold
-              .xl4
-              .make()
+          VxConsumer(
+            notifications: {},
+            mutations: {RemoveMutation},
+            builder: (context, MyStore, _) {
+              return "Rs.${_cart.totalPrice}"
+                  .text
+                  .color(context.theme.hintColor)
+                  .bold
+                  .xl4
+                  .make();
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-class _CartList extends StatefulWidget {
-  const _CartList({super.key});
+class _CartList extends StatelessWidget {
+  _CartList({super.key});
 
-  @override
-  State<_CartList> createState() => __CartListState();
-}
-
-class __CartListState extends State<_CartList> {
-  final _cart = CartModel();
+  final CartModel _cart = (VxState.store as MyStore).cart;
   @override
   Widget build(BuildContext context) {
+    VxState.watch(context, on: [RemoveMutation]);
     return _cart.products.isEmpty
         ? "Cart is Empty !".text.makeCentered()
         : ListView.builder(
@@ -79,10 +79,7 @@ class __CartListState extends State<_CartList> {
             itemBuilder: (context, index) => ListTile(
                   title: _cart.products[index].name.text.make().px32(),
                   trailing: IconButton(
-                      onPressed: () {
-                        _cart.remove(_cart.products[index]);
-                        setState(() {});
-                      },
+                      onPressed: () => RemoveMutation(_cart.products[index]),
                       icon: const Icon(CupertinoIcons.delete)),
                   leading: Icon(Icons.done),
                 ));
