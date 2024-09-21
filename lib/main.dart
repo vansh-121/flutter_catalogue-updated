@@ -3,22 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/pages/cart_page.dart';
-import 'package:flutter_catalogue/pages/detail_page.dart';
 import 'package:flutter_catalogue/pages/login_page.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
-import 'package:flutter_catalogue/widgets/catalog_product.dart';
-import 'package:flutter_catalogue/widgets/home%20widgets/catalog_list.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'pages/home_page.dart';
+import 'package:url_strategy/url_strategy.dart';
 
-void main() => runApp(
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) =>
-            VxState(store: MyStore(), child: MyApp()), // Wrap your app
-      ),
-    );
+void main() {
+  setPathUrlStrategy();
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) =>
+          VxState(store: MyStore(), child: MyApp()), // Wrap your app
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.LightTheme(context),
       darkTheme: MyTheme.DarkTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.HomeRoute,
+      initialRoute: Routes.loginRoute,
       routes: {
         "/": (context) => const LoginPage(),
         Routes.HomeRoute: (context) => const HomePage(),
